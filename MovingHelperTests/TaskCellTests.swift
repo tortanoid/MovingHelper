@@ -11,8 +11,29 @@ import XCTest
 import MovingHelper
 
 class TaskCellTests: XCTestCase {
+    
+    
+    
     func testCheckingCheckboxMarksTaskDone() {
-        let cell = TaskTableViewCell()
+        
+        var testCell: TaskTableViewCell?
+        let mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        if let navVC = mainStoryboard.instantiateInitialViewController() as? UINavigationController,
+            listVC = navVC.topViewController as? MasterViewController {
+                let tasks = TaskLoader.loadStockTasks()
+                listVC.createdMovingTasks(tasks)
+                testCell = listVC.tableView(listVC.tableView, cellForRowAtIndexPath: NSIndexPath(forRow: 0,
+                    inSection: 0)) as? TaskTableViewCell
+                //REST OF CODE YOU ALREADY ADDED GOES HERE
+        } else {
+            XCTFail("Could not get reference to list VC!")
+        }
+        
+        if let cell = testCell {
+            //REST OF THE CODE BELOW SETTING UP THE CELL GOES HERE
+        } else {
+            XCTFail("Test cell was nil!")
+        }
         
         //1
         let expectation = expectationWithDescription("Task updated")
